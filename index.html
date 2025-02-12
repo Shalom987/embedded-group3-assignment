@@ -22,7 +22,7 @@
     <button onclick="triggerEmergency()">Trigger Emergency Irrigation</button>
 
     <script>
-        const scriptUrl = "https://script.google.com/macros/s/AKfycbxKxSuHtKUwkRC1_H8KdZnsSLL-e2oDpir2ZBtdX94NGXeYF-Q7R5uYqcSPBfBVr8wvVA/exec";
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbwAYtnvVGOZwdJBQ4q2LMNypKeA6eWOtXrvh2YejjKjmOKORRyEGNvGcGVM71NNMM4ATg/exec";
 
         function fetchData() {
             fetch(scriptUrl, { method: "POST", body: JSON.stringify({ method: "getData" }) })
