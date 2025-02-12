@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mushroom Farm Monitoring</title>
+</head>
+<body>
+    <h2>Farm Data Monitoring</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Temperature (°C)</th>
+                <th>Humidity (%)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="dataTable"></tbody>
+    </table>
+
+    <button onclick="triggerEmergency()">Trigger Emergency Irrigation</button>
+
+    <script>
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbxKxSuHtKUwkRC1_H8KdZnsSLL-e2oDpir2ZBtdX94NGXeYF-Q7R5uYqcSPBfBVr8wvVA/exec";
+
+        function fetchData() {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify({ method: "getData" }) })
+            .then(response => response.json())
+            .then(data => {
+                let table = document.getElementById("dataTable");
+                table.innerHTML = "";
+                data.forEach(row => {
+                    let tr = document.createElement("tr");
+                    row.forEach(cell => {
+                        let td = document.createElement("td");
+                        td.textContent = cell;
+                        tr.appendChild(td);
+                    });
+                    table.appendChild(tr);
+                });
+            });
+        }
+
+        function triggerEmergency() {
+            fetch(scriptUrl, { method: "POST", body: JSON.stringify({ method: "emergencyIrrigation" }) });
+        }
+
+        fetchData();
+        setInterval(fetchData, 5000);
+    </script>
+</body>
+</html>
